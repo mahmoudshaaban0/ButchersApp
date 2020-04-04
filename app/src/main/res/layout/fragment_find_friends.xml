@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#242a38"
+    tools:context=".ui.FindFriendsFragment">
+
+
+
+
+
+    <!-- TODO: Update blank fragment layout -->
+ <androidx.constraintlayout.widget.ConstraintLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent" >
+
+     <TextView
+         android:id="@+id/textView10"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="56dp"
+         android:fontFamily="@font/lato_medium"
+         android:text="Search"
+         android:textColor="#FFF"
+         android:textSize="40sp"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.054"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+
+
+     <EditText
+         android:id="@+id/editText"
+         android:layout_width="350dp"
+         android:layout_height="49dp"
+         android:layout_marginTop="12dp"
+         android:background="@drawable/search_bg"
+         android:hint="Search"
+         android:inputType="text"
+         android:padding="15dp"
+         android:textColorHint="#8F9092"
+         android:textSize="17sp"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.491"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+     <View
+         android:id="@+id/view"
+         android:layout_width="match_parent"
+         android:layout_height="1dp"
+         android:layout_marginTop="8dp"
+         android:background="#1B1A1A"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/clients_recycler"
+         android:layout_width="match_parent"
+         android:layout_height="451dp"
+         android:layout_marginTop="8dp"
+         android:layout_marginBottom="19dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+
+ </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.core.widget.NestedScrollView>

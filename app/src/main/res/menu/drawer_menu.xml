@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/iosprofile"
+            android:title="Profile"
+
+            />
+
+        <item
+            android:icon="@drawable/iosbookmark"
+            android:id="@+id/nav_message"
+            android:title="Bookmarks"
+
+            />
+
+        <item
+            android:icon="@drawable/iosnews"
+            android:id="@+id/nav_news"
+            android:title="News"
+
+            />
+        <item
+            android:icon="@drawable/discover"
+            android:id="@+id/nav_discover"
+            android:title="Discover"
+
+            />
+
+
+    </group>
+
+
+
+
+
+</menu>
