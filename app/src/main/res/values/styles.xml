@@ -10,4 +10,20 @@
 
     </style>
 
+
+
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">#242a38</item>
+    </style>
+
+    <style name="DatePickerTheme" parent="@android:style/Theme.Holo.Light.Dialog.MinWidth">
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+    </style>
+
+
 </resources>

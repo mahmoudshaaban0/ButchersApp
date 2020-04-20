@@ -46,7 +46,7 @@
             android:layout_marginTop="176dp"
             android:fontFamily="@font/lato_light"
             android:hint="Email"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
             android:alpha="0.27"
             android:background="@drawable/login_activity_btn_style"

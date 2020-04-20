@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#242a38"
+    android:layout_height="wrap_content">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/receiver_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/profile_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/receiver_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/lato_medium"
+
+        android:text="Mahmoud Shaaban"
+        android:textColor="#FFF"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toEndOf="@+id/receiver_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/receiver_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/lato_medium"
+        android:textColor="#4d5a6d"
+        android:textSize="15sp"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.039"
+        app:layout_constraintStart_toEndOf="@+id/receiver_image"
+        app:layout_constraintTop_toBottomOf="@+id/receiver_name" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_on"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="16dp"
+        android:src="@mipmap/ic_launcher"
+        app:civ_border_color="#05df29"
+        android:visibility="gone"
+        app:civ_border_width="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/receiver_name"
+        app:layout_constraintTop_toTopOf="@+id/receiver_image"
+        app:layout_constraintVertical_bias="0.807" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_off"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="16dp"
+        android:src="@mipmap/ic_launcher"
+        app:civ_border_color="#bfbfbf"
+        android:visibility="gone"
+        app:civ_border_width="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/receiver_name"
+        app:layout_constraintTop_toTopOf="@+id/receiver_image"
+        app:layout_constraintVertical_bias="0.807" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="324dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="11dp"
+        android:background="#1B1A1A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.896"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/receiver_message" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

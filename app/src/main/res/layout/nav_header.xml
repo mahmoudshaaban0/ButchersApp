@@ -14,17 +14,18 @@
         android:layout_height="96dp"
         android:layout_marginTop="60dp"
         android:layout_gravity="center"
-        android:src="@drawable/userpicbig" />
+        android:src="@drawable/profile_image" />
 
 
 
     <TextView
         android:id="@+id/username_text"
         android:textStyle="normal"
-        android:text="Mahmoud Shaaban"
+        android:text="Username"
         android:textColor="#FFF"
-        android:textSize="18sp"
+        android:textSize="21sp"
         android:gravity="center"
+        android:fontFamily="@font/lato_medium"
         android:layout_marginTop="14dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,9 +35,10 @@
     <TextView
         android:id="@+id/statues"
         android:textStyle="normal"
-        android:text="Alexandria"
+        android:text="Statues"
         android:textColor="#FFF"
         android:textSize="14sp"
+        android:fontFamily="@font/lato_medium"
         android:gravity="center"
         android:layout_marginTop="4dp"
         android:layout_width="match_parent"

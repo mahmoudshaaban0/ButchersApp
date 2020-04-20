@@ -16,15 +16,23 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.mahmoudshaaban.butchers.R;
 import com.mahmoudshaaban.butchers.pojo.Prevalent;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
@@ -33,10 +41,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     RecyclerView mrecycler, posts_recycler;
     FloatingActionButton post_icon;
-    private DatabaseReference productref;
+    private DatabaseReference productref, Rootref;
     RecyclerView.LayoutManager layoutManager;
     FragmentManager fragmentManager;
     private static final String TAG = "HomeActivity";
+    FirebaseAuth mAuth;
+    public FirebaseUser currentUser, userdata;
+    CircleImageView profileimageview;
+    TextView userStatuesTextView , userNameTextView;
+
+    private String currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +58,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
 
         productref = FirebaseDatabase.getInstance().getReference().child("Posts");
+        Rootref = FirebaseDatabase.getInstance().getReference();
+
+        mAuth = FirebaseAuth.getInstance();
+        userdata = mAuth.getCurrentUser();
+
+
+
 
 
         final ChipNavigationBar chipNavigationBar = findViewById(R.id.bottom_navigation);
+
 
         if (savedInstanceState == null) {
             chipNavigationBar.setItemSelected(R.id.home, true);
@@ -66,6 +88,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         break;
                     case R.id.discover:
                         fragment = new FindFriendsFragment();
+                        break;
+                    case R.id.edit:
+                        fragment = new MessagesFragment();
+                        break;
 
                 }
                 if (fragment != null) {
@@ -94,17 +120,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerview = navigationView.getHeaderView(0);
-        TextView userNameTextView = headerview.findViewById(R.id.username_text);
-        CircleImageView profileimageview = headerview.findViewById(R.id.user_profile_pic);
-        TextView userStatuesTextView = headerview.findViewById(R.id.statues);
+        userNameTextView = headerview.findViewById(R.id.username_text);
+        profileimageview = headerview.findViewById(R.id.user_profile_pic);
+        userStatuesTextView = headerview.findViewById(R.id.statues);
 
 
-        Picasso.get().load(Prevalent.currentOnlineUser.getImage()).into(profileimageview);
-        userNameTextView.setText(Prevalent.currentOnlineUser.getUsername());
-        userStatuesTextView.setText(Prevalent.currentOnlineUser.getStatues());
+
 
         // bottom nav
-
 
         // toggle ( menu bottom )
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar2, R.string.navigation_drawer_open
@@ -114,10 +137,54 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
 
-
-
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            VeriftyUserExistence();
+
+        }
+    }
+
+
+
+    private void VeriftyUserExistence() {
+
+        String currentUserID = mAuth.getCurrentUser().getUid();
+        Rootref.child("Guests").child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if ((dataSnapshot.exists()) && (dataSnapshot.hasChild("image"))){
+                    String userImage = dataSnapshot.child("image").getValue().toString();
+                    String userName = dataSnapshot.child("name").getValue().toString();
+                    String userStatues = dataSnapshot.child("Statues").getValue().toString();
+
+                    Picasso.get().load(userImage).into(profileimageview);
+                    userStatuesTextView.setText(userStatues);
+                    userNameTextView.setText(userName);
+
+
+
+                } else {
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    userNameTextView.setText(name);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
     @Override
@@ -140,16 +207,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(go);
         }
         if (id == R.id.nav_discover) {
-            Paper.book().destroy();
+            mAuth.signOut();
             Intent logout = new Intent(HomeActivity.this, MainActivity.class);
-            logout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            logout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(logout);
-            finish();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void statues(String stus){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Guests").child(userdata.getUid());
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("checkonline" , stus);
+        reference.updateChildren(hashMap);
+
+
+    }
+
 }
 
 

@@ -7,4 +7,5 @@
     <color name="drawer_background">#242a38</color>
     <color name="yourSelectedColor">#F44336</color>
     <color name="defaultColor">#F44336</color>
+    <color name="White">#FFFFFF</color>
 </resources>

@@ -29,7 +29,7 @@
         <item
             android:icon="@drawable/discover"
             android:id="@+id/nav_discover"
-            android:title="Discover"
+            android:title="Log out"
 
             />
 

@@ -1,4 +1,4 @@
-package com.mahmoudshaaban.butchers.viewholder;
+package com.mahmoudshaaban.butchers.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mahmoudshaaban.butchers.R;
-import com.mahmoudshaaban.butchers.adapters.PersonAdapter;
 import com.mahmoudshaaban.butchers.pojo.Posts;
 import com.squareup.picasso.Picasso;
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText password , email ;
     CheckBox checkBox;
     Button signin;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener mAuthStateListner;
 
 
     @Override
@@ -48,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password_login);
         checkBox = findViewById(R.id.checkbox);
         signin = findViewById(R.id.login_button);
+        mAuth = FirebaseAuth.getInstance();
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +62,20 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser();
             }
         });
+
+       /* mAuthStateListner = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() != null) {
+                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                    startActivity(intent);
+                }
+
+
+            }
+        };*/
+
+
 
 
 
@@ -75,58 +96,37 @@ public class LoginActivity extends AppCompatActivity {
 
         else {
 
-            AllowAccessToAccount(email_String, password_String);
-        }
+            final ProgressDialog progressDialog = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
+
+            progressDialog.setMessage("Please wait ");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
+            mAuth.signInWithEmailAndPassword(email_String,password_String).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                        startActivity(intent);
+                        progressDialog.dismiss();
 
 
-    }
-
-    private void AllowAccessToAccount(final String email, final String password) {
-
-        if (checkBox.isChecked()){
-
-            Paper.book().write(Prevalent.userEmailAddress, email);
-            Paper.book().write(Prevalent.userPassword, password);
-
-        }
-
-        rootRef = FirebaseDatabase.getInstance().getReference();
-
-        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(data).child(password).exists()) {
-
-                    userData = dataSnapshot.child("Clients").child(password).getValue(Clients.class);
-                    if (userData.getEmail().equals(email)) {
-                        if (userData.getPassword().equals(password)) {
-                            if (data.equals("Clients")) {
-                                Toast.makeText(LoginActivity.this, "Logged in successfully ... ", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                Prevalent.currentOnlineUser = userData;
-                                startActivity(intent);
-
-                            }
-                        }
-
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Email or password isn't correct", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 }
-                else {
-                    Toast.makeText(LoginActivity.this, "This account doesn't exist", Toast.LENGTH_SHORT).show();
-
-                }
-
-
-                }
+            });
 
 
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+
+        }
+
 
     }
+
+
 }

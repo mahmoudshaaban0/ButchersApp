@@ -106,6 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="Date of birth"
+            android:focusable="true"
+            android:focusableInTouchMode="false"
             android:padding="15dp"
             android:textColor="#FFF"
             android:textColorHint="#4E586E"

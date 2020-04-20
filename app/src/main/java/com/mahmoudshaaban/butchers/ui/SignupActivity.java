@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +16,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import com.mahmoudshaaban.butchers.R;
+import com.mahmoudshaaban.butchers.pojo.Guests;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +39,9 @@ public class SignupActivity extends AppCompatActivity {
      DatabaseReference rootRef;
      EditText username , email , password , confirmpassword;
      Button signup;
+     FirebaseAuth mAuth;
+     ProgressDialog progressDialog;
+
 
 
     @Override
@@ -43,6 +54,8 @@ public class SignupActivity extends AppCompatActivity {
         password = findViewById(R.id.password_signup);
         confirmpassword = findViewById(R.id.confirm_password_signup);
         signup = findViewById(R.id.signup_btn);
+        mAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(SignupActivity.this,R.style.AppCompatAlertDialogStyle);
 
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +95,47 @@ public class SignupActivity extends AppCompatActivity {
         else if (TextUtils.isEmpty(confirmPassword_String)){
             Toast.makeText(this, "Please write your Password Again", Toast.LENGTH_SHORT).show();
 
+        } else if (!password_String.equals(confirmPassword_String)){
+            Toast.makeText(this, "Password Doesn't match", Toast.LENGTH_SHORT).show();
+
         }
         else {
 
-            validateaccount(userName , email_String , password_String , confirmPassword_String);
+            mAuth.createUserWithEmailAndPassword(email_String,password_String).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        progressDialog.setMessage("Please wait");
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        progressDialog.show();
+
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        String userID = firebaseUser.getUid();
+
+                        Guests guests = new Guests(
+                                userName,email_String , password_String , confirmPassword_String , userID
+                        );
+                        String currentUserId = mAuth.getCurrentUser().getUid();
+                        FirebaseDatabase.getInstance().getReference().child("Guests")
+                        .child(currentUserId).setValue(guests).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(SignupActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+
+                                }
+                            }
+                        });
+
+
+
+                    } else {
+                        Toast.makeText(SignupActivity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
 
         }
 

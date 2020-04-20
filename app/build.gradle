@@ -77,4 +77,8 @@ dependencies {
     // cropperImage lib
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
+    //Progressview
+    implementation 'com.github.shts:StoriesProgressView:3.0.0'
+
+
 }
