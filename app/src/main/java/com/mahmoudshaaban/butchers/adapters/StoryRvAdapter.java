@@ -115,9 +115,9 @@ public class StoryRvAdapter extends RecyclerView.Adapter<StoryRvAdapter.ViewHold
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Users users = dataSnapshot.getValue(Users.class);
-                Picasso.get().load(users.getImage()).into(viewHolder.story_photo);
+                Picasso.get().load(users.getImage()).placeholder(R.drawable.profile_image).into(viewHolder.story_photo);
                 if (pos != 0){
-                    Picasso.get().load(users.getImage()).into(viewHolder.story_photo_seen);
+                    Picasso.get().load(users.getImage()).placeholder(R.drawable.profile_image).into(viewHolder.story_photo_seen);
                     viewHolder.story_username.setText(users.getName());
                 }
             }

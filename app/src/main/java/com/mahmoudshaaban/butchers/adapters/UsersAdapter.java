@@ -64,7 +64,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
         isFollowing(user.getId(),holder.button);
 
-        if (user.getId().equals(firebaseUser.getUid())){
+        if (user.getId() != null && user.getId().equals(firebaseUser.getUid())){
             holder.button.setVisibility(View.GONE);
         }
 
@@ -139,12 +139,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+
                 if (dataSnapshot.child(userid).exists()){
                     btn.setText("Following ");
                     btn.setBackgroundResource(R.drawable.stroke_btn);
                 } else {
                     btn.setText("Follow");
                     btn.setBackgroundResource(R.drawable.defult_state);
+                }
                 }
             }
 

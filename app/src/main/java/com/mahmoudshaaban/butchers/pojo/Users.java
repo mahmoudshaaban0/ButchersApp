@@ -1,5 +1,7 @@
 package com.mahmoudshaaban.butchers.pojo;
 
+import com.google.firebase.database.PropertyName;
+
 public class Users {
 
  private String name , Statues , image , id , checkonline , Birthday;
@@ -19,14 +21,6 @@ public class Users {
 
     public String getName() {
         return name;
-    }
-
-    public String getBirthday() {
-        return Birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        Birthday = birthday;
     }
 
     public void setName(String name) {
@@ -63,5 +57,13 @@ public class Users {
 
     public void setCheckonline(String checkonline) {
         this.checkonline = checkonline;
+    }
+
+    public String getBirthday() {
+        return Birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        Birthday = birthday;
     }
 }

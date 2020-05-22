@@ -1,5 +1,6 @@
 package com.mahmoudshaaban.butchers.pojo;
 
+
 public class CategoriesModel {
 
     private int categorie_Image;

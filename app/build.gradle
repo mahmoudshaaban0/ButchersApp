@@ -7,20 +7,34 @@ android {
     defaultConfig {
         applicationId "com.mahmoudshaaban.butchers"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
+        targetSdkVersion 30
+        versionCode 3
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
+            useProguard false
+            debuggable false
             minifyEnabled false
+            shrinkResources false// <-- enable minification
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug{
+            useProguard false
+            debuggable false
+            shrinkResources false// <
+            minifyEnabled false // <-- enable minification
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+
     }
-    dataBinding {
-        enabled = true
+    lintOptions {
+        checkReleaseBuilds false
     }
+
+
 }
 
 dependencies {
@@ -30,11 +44,6 @@ dependencies {
 
     def lifecycle_version = "2.1.0"
 
-    //Paper lib
-    implementation 'io.paperdb:paperdb:2.6'
-
-    // FirebaseViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     //cardview
     implementation 'com.android.support:cardview-v7:29.0.0'
@@ -79,6 +88,9 @@ dependencies {
 
     //Progressview
     implementation 'com.github.shts:StoriesProgressView:3.0.0'
+
+    implementation "androidx.versionedparcelable:versionedparcelable:1.1.0"
+
 
 
 }

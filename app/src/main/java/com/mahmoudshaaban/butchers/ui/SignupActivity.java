@@ -2,7 +2,6 @@ package com.mahmoudshaaban.butchers.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

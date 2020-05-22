@@ -31,7 +31,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.mahmoudshaaban.butchers.R;
-import com.mahmoudshaaban.butchers.databinding.ActivityProfileBinding;
 import com.mahmoudshaaban.butchers.pojo.Prevalent;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -45,7 +44,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    ActivityProfileBinding binding;
     private String checker = "";
     private Uri imagURI;
     private StorageTask uploadtask;
@@ -300,6 +298,21 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+                    } else if (dataSnapshot.child("Phone").exists() && dataSnapshot.child("Statues").exists() && dataSnapshot.child("Birthday").exists()){
+                        String name =  dataSnapshot.child("name").getValue().toString();
+                        String phoneee = dataSnapshot.child("Phone").getValue().toString();
+                        String statues1 = dataSnapshot.child("Statues").getValue().toString();
+                        String birthday = dataSnapshot.child("Birthday").getValue().toString();
+
+
+                        username.setText(name);
+                        statues.setText(statues1);
+                        phone.setText(phoneee);
+                        edit_birthday1.setText(birthday);
+
+                    } else {
+                        String name =  dataSnapshot.child("name").getValue().toString();
+                        username.setText(name);
                     }
 
                 }

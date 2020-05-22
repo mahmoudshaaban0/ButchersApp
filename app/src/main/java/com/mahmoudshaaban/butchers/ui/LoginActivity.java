@@ -2,7 +2,6 @@ package com.mahmoudshaaban.butchers.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -29,7 +28,6 @@ import com.mahmoudshaaban.butchers.R;
 import com.mahmoudshaaban.butchers.pojo.Clients;
 import com.mahmoudshaaban.butchers.pojo.Prevalent;
 
-import io.paperdb.Paper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -49,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Paper.init(this);
         email = findViewById(R.id.email_login);
         password = findViewById(R.id.password_login);
         checkBox = findViewById(R.id.checkbox);

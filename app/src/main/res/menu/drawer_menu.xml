@@ -13,19 +13,7 @@
 
             />
 
-        <item
-            android:icon="@drawable/iosbookmark"
-            android:id="@+id/nav_message"
-            android:title="Bookmarks"
-
-            />
-
-        <item
-            android:icon="@drawable/iosnews"
-            android:id="@+id/nav_news"
-            android:title="News"
-
-            />
+       
         <item
             android:icon="@drawable/discover"
             android:id="@+id/nav_discover"

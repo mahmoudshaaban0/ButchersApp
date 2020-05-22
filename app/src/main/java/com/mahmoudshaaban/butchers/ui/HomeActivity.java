@@ -35,7 +35,6 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.paperdb.Paper;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -172,7 +171,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-                } else {
+                } else if ((dataSnapshot.exists()) && (dataSnapshot.hasChild("name"))){
                     String name = dataSnapshot.child("name").getValue().toString();
                     userNameTextView.setText(name);
                 }

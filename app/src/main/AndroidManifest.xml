@@ -18,6 +18,7 @@
         <activity android:name=".ui.AddStoryActivity" />
         <activity android:name=".ui.ChatActivity"
             android:parentActivityName=".ui.DetailProfileActivity"
+
             />
         <activity android:name=".ui.DetailProfileActivity" />
         <activity
